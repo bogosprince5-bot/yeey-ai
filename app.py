@@ -48,7 +48,7 @@ HTML = '''
             <span class="badge">Ghana AI</span>
         </div>
         <div class="stats">
-            <p><strong>Deployed:</strong> May 3, 2026</p>
+            <p><strong>Deployed:</strong> May 4, 2026</p>
             <p><strong>Origin:</strong> Accra, Ghana</p>
             <p><strong>Stack:</strong> Python + Flask + Render</p>
             <p><strong>API:</strong> /ask endpoint active</p>
@@ -88,9 +88,6 @@ def ask_ai():
     # Default Baobab reply
     return jsonify({"answer": "YƐƐ AI is learning. But YƐƐ Talk Core is ready. Ask me about YƐƐ Talk, time, or say 'hello'."})
 
-@app.route('/')
-def home():
-    return "YƐƐ AI Satellite Online. Baobab Tech reporting for duty."
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
