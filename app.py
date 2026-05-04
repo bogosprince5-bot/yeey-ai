@@ -2,9 +2,11 @@ from flask import Flask, request, jsonify, render_template_string
 from flask_cors import CORS
 import datetime
 import os
+import logging
 
 app = Flask(__name__)
-CORS(app)  # Lets Yɛɛ Talk call this API
+CORS(app)
+logging.basicConfig(level=logging.INFO)
 
 HTML = '''
 <!DOCTYPE html>
@@ -13,6 +15,7 @@ HTML = '''
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YƐƐ AI - Baobab Tech</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -43,7 +46,7 @@ HTML = '''
         <h1>YƐƐ AI</h1>
         <h2>Satellite Online. Baobab Tech reporting for duty.</h2>
         <div>
-            <span class="badge">v1.2 Live</span>
+            <span class="badge">v1.3 Live</span>
             <span class="badge">Frankfurt</span>
             <span class="badge">Ghana AI</span>
         </div>
@@ -52,42 +55,3 @@ HTML = '''
             <p><strong>Origin:</strong> Accra, Ghana</p>
             <p><strong>Stack:</strong> Python + Flask + Render</p>
             <p><strong>API:</strong> /ask endpoint active</p>
-        </div>
-        <div class="footer">
-            <p>Founded by CEO Kwame. Powered by the Ɛ.</p>
-            <p>https://yee-ai.onrender.com</p>
-        </div>
-    </div>
-</body>
-</html>
-'''
-
-# Baobab Knowledge Base
-GHANA_REPLIES = {
-    "hello": "Akwaba! YƐƐ AI here. How can Baobab Tech help?",
-    "how are you": "I dey fine. System green. YƐƐ AI operational.",
-    "time": f"Baobab time is {datetime.datetime.now().strftime('%H:%M:%S')}",
-    "what is yeetalk": "YƐƐ Talk = Ghana's AI chat. Built by CEO Kwame.",
-    "who built you": "CEO Kwame built me for Baobab Tech. From Accra to the world.",
-    "twi": "Mepa wo kyɛw, meka Twi kakra. YƐƐ AI learns fast."
-}
-
-@app.route('/')
-def home():
-    return render_template_string(HTML)
-
-@app.route('/ask', methods=['POST'])
-def ask_ai():
-    user_question = request.json.get('question', '').lower()
-    
-    # Check Baobab Knowledge first
-    for key, reply in GHANA_REPLIES.items():
-        if key in user_question:
-            return jsonify({"answer": reply})
-    
-    # Default Baobab reply
-    return jsonify({"answer": "YƐƐ AI is learning. But YƐƐ Talk Core is ready. Ask me about YƐƐ Talk, time, or say 'hello'."})
-
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 10000))
-    app.run(host='0.0.0.0', port=port)
